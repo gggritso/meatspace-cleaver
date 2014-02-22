@@ -1,0 +1,33 @@
+{
+  "name": "meatspace-cleaver",
+  "version": "0.0.1",
+  "description": "A read-only CLI for Meatspace Chat",
+  "main": "bin/meatspace-cleaver.js",
+  "bin": {
+    "meatcleaver": "bin/meatspace-cleaver.js"
+  },
+  "dependencies": {
+    "chalk": "~0.4.0",
+    "socket.io-client": "~0.9.16",
+    "nomnom": "~1.6.2",
+    "underscore": "~1.6.0",
+    "underscore.string": "~2.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gggritso/meatspace-cleaver.git"
+  },
+  "keywords": [
+    "meatspace"
+  ],
+  "author": "George Gritsouk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gggritso/meatspace-cleaver/issues"
+  },
+  "homepage": "https://github.com/gggritso/meatspace-cleaver"
+}

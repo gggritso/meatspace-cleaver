@@ -5,7 +5,7 @@ It's a terminal read-only Meatspace Chat client. That's it. I didn't want to kee
 ## Usage
 
 ```bash
-npm install -g meatcleaver
+npm install -g meatspace-cleaver
 meatcleaver
 ```
 
@@ -25,7 +25,7 @@ This does not work for the staging server because I am lazy.
 
 ## Names
 
-One fun feature I added is fingerprint lookup. Once you get tired of not knowing who's saying what just make a `~/.meatcleaver-names.json` file and fill it with mappings. Example:
+One fun feature I added is fingerprint lookup. Once you get tired of not knowing who's saying what just make a `~/meatspace-cleaver-names.json` file and fill it with mappings. Example:
 
 ```json
 {

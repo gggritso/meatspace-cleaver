@@ -15,73 +15,72 @@
 
   // CONSTANTS
   var 
-    fg = [ 'black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white' ],
-    bg = _.map( fg, function( d ) { return 'bg' + _s.capitalize( d ); });
+    NATO = [
+      'alpha',
+      'bravo',
+      'charlie',
+      'delta',
+      'echo',
+      'foxtrot',
+      'hotel',
+      'kilo',
+      'lima',
+      'mike',
+      'november',
+      'oscar',
+      'romeo',
+      'sierra',
+      'tango',
+      'whiskey',
+    ];
 
   var
-    OPEN_MESSAGES = [ 'Meating Intensifies!', 'FOMO be gone!', 'Oh boy, I hope my secret crush is online!' ],
-    CLOSE_MESSAGES = [ 'Brace for FOMO!', 'FOMO DEFCON 2', 'Oh God, what have you done!?', 'They’ll miss you though!', '<3' ],
-    NAMES;
-
-  try {
-    NAMES = JSON.parse( fs.readFileSync( process.env['HOME']  + '/.meatspace-cleaver-names.json' ) );
-  } catch ( err ) {
-    NAMES = {};
-  }
+    OPEN_MESSAGES = [ 'Meating Intensifies!', 'FOMO be gone!', 'Oh boy, I hope my secret crush is online!', 'Goodbye, hopes of being productive today!', '42', 'I hope Jen is online!' ],
+    CLOSE_MESSAGES = [ 'Brace for FOMO!', 'FOMO DEFCON 2', 'Oh God, what have you done!?', 'They’ll miss you though!', '<3', 'You’ll come crawling back. They all do.', 'I give it like five minutes, tops.' ];
 
   // STATE
   var 
-    mapping = {},
-    combinations = [];
+    previousFingerprint = '';
 
   // HELPERS
-  var colourFromFingerPrint = function ( fingerprint ) {
-    // For a while I wanted to highlight different names with different colours but quickly realized that terminals don't support enough of them. Oh well! I'll leave this for the future.
-
-    d = mapping[ fingerprint ];
-    if ( d ) {
-      var d = mapping[ fingerprint ];
-      return chalk[ d[0] ][ d[1] ];
+  var makeSpaces = function ( len ) {
+    var retA = [];
+    for (var i = 0; i < len; i++ ) {
+      retA.push( ' ' );
     }
 
-    var cfg, cbg, retries = 0;
-
-    do {
-
-      cfg = _.sample( fg, 1 )[ 0 ];
-      cbg = _.sample( bg, 1 )[ 0 ];
-      retries += 1;
-
-    } while ( _.contains( combinations, cfg + cbg ) && retries < 5 );
-    // TODO: make sure that BG and FG are different colours ... and don't look terrible
-
-    combinations.push( cfg + cbg );
-    mapping[ fingerprint ] = [ cfg, cbg ];
-
-    return chalk[ cfg ][ cbg ];
-
+    return retA.join( '' );
   };
+
+  var hexToNATO = function( c ) {
+    var i = parseInt( c, 16 );
+    return NATO[ i ];
+  }
 
   var nameFromFingerPrint = function ( fingerprint ) {
-    return NAMES[ fingerprint ] || fingerprint;
-  };
+    var
+      firstThree = fingerprint.split( '' ).slice( 0, 3 ),
+      processedName = _.map( firstThree, hexToNATO ).join( '-' );
 
-  var trimFingerprint = function ( fingerprint ) {
-    return fingerprint.slice( 0, 7 ) + '...' + fingerprint.slice( -7, fingerprint.length ) + ':';
+    if ( fingerprint === previousFingerprint ) {
+      processedName = makeSpaces( processedName.length );
+    }
+
+    previousFingerprint = fingerprint;
+    return processedName;
   };
 
   var respondToMessage = function ( message ) {
     var
       fingerprint = message.chat.value.fingerprint,
       message = message.chat.value.message,
-      name = nameFromFingerPrint( fingerprint ),
-      infix = ':';
+      infix = ':',
+      nom = nameFromFingerPrint( fingerprint ) + infix;
 
-    console.log( chalk.magenta( nameFromFingerPrint( fingerprint ) + infix ), message );
-
+    console.log( chalk[ 'magenta' ]( nom ), message );
   };
 
-  var respondToDisconnect = function() {
+  var respondToDisconnect = function () {
     console.log( chalk.red( 'lost connection :(' ) );
     process.exit();
   };

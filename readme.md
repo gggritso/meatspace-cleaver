@@ -22,16 +22,3 @@ meatcleaver -c chat
 ```
 
 This does not work for the staging server because I am lazy.
-
-## Names
-
-One fun feature I added is fingerprint lookup. Once you get tired of not knowing who's saying what just make a `~/meatspace-cleaver-names.json` file and fill it with mappings. Example:
-
-```json
-{
-    "90eae8dd51b66669f262a4d18fbb155c": "George"
-}
-
-```
-
-Stalk your Meatspace obsession with impunity, keep track of the conversation. I've put together a pretty comprehensive fingerprint lookup, but I feel really creepy sharing it, so I won't.

@@ -15,28 +15,12 @@
 
   // CONSTANTS
   var 
-    NATO = [
-      'alpha',
-      'bravo',
-      'charlie',
-      'delta',
-      'echo',
-      'foxtrot',
-      'hotel',
-      'kilo',
-      'lima',
-      'mike',
-      'november',
-      'oscar',
-      'romeo',
-      'sierra',
-      'tango',
-      'whiskey',
-    ];
-
+    ADJECTIVES = [ 'pan-fried', 'braised', 'boiled', 'grilled', 'baked', 'skewered', 'sous-vide', 'poached', 'BBQ', 'rare', 'seared', 'steamed', 'raw', 'sautéed', 'simmered', 'deep-fried' ],
+    MEATS = [ 'chicken', 'salmon', 'beef', 'horse', 'pork', 'quail', 'veal', 'shrimp', 'cod', 'kangaroo', 'camel', 'bison', 'lamb', 'turkey', 'squid', 'pheasant' ],
+    CUTS = [ 'fillet', 'steak', 'medallion', 'tongue', 'tar-tar', 'sushi', 'stew', 'tenderloin', 'giblets', 'neck', 'soup', 'sandwich', 'wrap', 'in a bread bowl', 'paté', 'dip' ];
   var
-    OPEN_MESSAGES = [ 'Meating Intensifies!', 'FOMO be gone!', 'Oh boy, I hope my secret crush is online!', 'Goodbye, hopes of being productive today!', '42', 'I hope Jen is online!' ],
-    CLOSE_MESSAGES = [ 'Brace for FOMO!', 'FOMO DEFCON 2', 'Oh God, what have you done!?', 'They’ll miss you though!', '<3', 'You’ll come crawling back. They all do.', 'I give it like five minutes, tops.' ];
+    OPEN_MESSAGES = [ 'Meating Intensifies!', 'FOMO be gone!', 'Oh boy, I hope my secret crush is online!', 'Goodbye, hopes of being productive today!', 'I wonder if they’re talking about dildo knives again...' ],
+    CLOSE_MESSAGES = [ 'Brace for FOMO!', 'FOMO DEFCON 2', 'Oh God, what have you done!?', '<3 <3 <3', 'You’ll come crawling back. They all do.', 'I give it like five minutes, tops.' ];
 
   // STATE
   var 
@@ -52,15 +36,14 @@
     return retA.join( '' );
   };
 
-  var hexToNATO = function( c ) {
-    var i = parseInt( c, 16 );
-    return NATO[ i ];
-  }
+  var integerFromHex = function ( c ) {
+    return parseInt( c, 16 );
+  };
 
   var nameFromFingerPrint = function ( fingerprint ) {
     var
-      firstThree = fingerprint.split( '' ).slice( 0, 3 ),
-      processedName = _.map( firstThree, hexToNATO ).join( '-' );
+      t = _.map( fingerprint.split( '' ).slice( 0, 3 ), integerFromHex ),
+      processedName = ADJECTIVES[ t[ 0 ] ] + ' ' + MEATS[ t[ 1 ] ] + ' ' + CUTS[ t[ 2 ] ];
 
     if ( fingerprint === previousFingerprint ) {
       processedName = makeSpaces( processedName.length );
@@ -86,6 +69,7 @@
   };
 
   var respondToExit = function() {
+    console.log( '\r  ' );
     console.log( chalk.red( _.sample( CLOSE_MESSAGES, 1 )[0] ) );
     process.exit();
   };

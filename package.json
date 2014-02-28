@@ -1,6 +1,6 @@
 {
   "name": "meatspace-cleaver",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A read-only CLI for Meatspace Chat",
   "main": "bin/meatspace-cleaver.js",
   "bin": {
